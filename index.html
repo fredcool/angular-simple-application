@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html ng-app="myApp" >
+	<head>
+		<title>DEMO</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- bootstrap css -->
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+		<!-- main class -->
+		<link rel="stylesheet" href="css/main.css">
+		<!-- angularjs core -->
+		<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+		<!-- angularui -->
+		<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+		<!-- module -->
+		<script type="text/javascript" src="js/main.js"></script>
+	</head>
+	
+	<body ng-controller="mainCtrl">
+		<div class="container-fluid">
+			<div class="row panel-header header">
+				<div class="col-xs-12">DEMO</div>
+			</div>
+		</div>
+		<div class="jumbotron">
+			<div class="container form">
+				<div class="row">
+					<div class="col-xs-12">
+						<h4>Create Product</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<form class="form-inline">
+							<div class="form-group">
+								<label for="exampleInputName2">Product Name</label>
+								<input type="text" id="form_name" class="form-control" ng-model="form.name" placeholder="Name">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail2">Product Quantity</label>
+								<input type="text" class="form-control" ng-model="form.quantity" placeholder="100">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail2">Product Unit Price</label>
+								<input type="text" class="form-control" ng-model="form.price" placeholder="10">
+							</div>
+							<button type="submit" class="btn btn-default" ng-click="create()">Create</button>
+						</form>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12"></div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row panel-header dashboard">
+				<div class="col-xs-12">DASHBOARD</div>
+			</div>
+			<div class="row panel-content">
+				<div class="col-xs-12">
+					<h4>Total Products <span class="badge">{{ productList.length | upperBound:3}}</span></h4>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row panel-header gap grid">
+				<div class="col-xs-12">GRID</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<td>Name</td>
+								<td>Quantity</td>
+								<td>Unit Price</td>
+								<td>Total Price</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-hide="productList.length > 0">
+								<td colspan="4" class="danger empty">EMPTY</td>
+							</tr>
+							<tr ng-repeat="product in productList | orderBy: 'name' track by $index">
+								<td>{{ product.name }}</td>
+								<td>{{ product.quantity }}</td>
+								<td>{{ product.price | currency }}</td>
+								<td ng-class="{'danger': product.quantity * product.price > 600, 'warning': product.quantity * product.price > 300}">{{ product.quantity * product.price | currency}}</td>
+							</tr>
+							<tr class="active" ng-hide="form.name == undefined && form.quantity == undefined && form.price == undefined">
+								<td>{{ form.name }}</td>
+								<td>{{ form.quantity }}</td>
+								<td>{{ form.price | currency}}</td>
+								<td>{{ form.quantity * form.price | currency}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
